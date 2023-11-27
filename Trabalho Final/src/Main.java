@@ -33,10 +33,24 @@ public class Main {
     diciplinas.add(new Diciplina(12,"Filosofia do Direito", "60", cursos.get(1)));
     diciplinas.add(new Diciplina(13,"Historia do direiro", "60", cursos.get(1)));
     diciplinas.add(new Diciplina(14,"LGPD", "60", cursos.get(1)));
-
-    //Instanciando aluno e professor
+/*  
+    //Instanciando Aluno e matriculando disciplinas
     alunos.add(new Aluno(0,"matheus", "123456789", "999557431", "123", "2011200", cursos.get(0)));
+    alunos.get(0).setDiciplina(diciplinas.get(0));
+    alunos.get(0).setDiciplina(diciplinas.get(1));   
+    alunos.add(new Aluno(1, "jefferon", "123456", "99635488",  "201922", "310776", cursos.get(1)));
+    alunos.get(1).setDiciplina(diciplinas.get(5));
+    alunos.get(1).setDiciplina(diciplinas.get(6)); 
+    alunos.add(new Aluno(2, "brendon", "123456", "99635488",  "201922", "310776", cursos.get(2)));
+    alunos.get(2).setDiciplina(diciplinas.get(10));
+    alunos.get(2).setDiciplina(diciplinas.get(11)); 
+
+    //Instaciando Professor
     professores.add(new Professor(0,"Frank", "987654321", "99785251", "123456", "9000", "ensino medio completo"));
+    professores.add(new Professor(0,"Frank", "987654321", "99785251", "123456", "9000", "ensino medio completo"));
+    professores.add(new Professor(0,"Frank", "987654321", "99785251", "123456", "9000", "ensino medio completo"));
+*/
+
         //Menu de opções
         while (true) {
             System.out.println("1. Cadastrar curso");
@@ -49,6 +63,7 @@ public class Main {
             System.out.println("8. Listar Professores");
             System.out.println("9. Matricular Aluno");
             System.out.println("10. Relatorio do Aluno");
+            System.out.println("11. Lançar notas");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opção: ");
             opcao = input.nextInt();
@@ -67,14 +82,10 @@ public class Main {
                     cadastroProfessor();
                     break;
                 case 5:
-                    for(Aluno alunoTemp : alunos){
-                        System.out.println(alunoTemp.getId()+". "+alunoTemp.getNome());
-                    }
+                    listarAlunos();
                     break;
                 case 6:
-                    for(Curso cursoTemp : cursos){
-                    System.out.println(cursoTemp.getId()+". " + cursoTemp.getNomeCurso());
-                    }                    
+                    listarCursos();                 
                     break;
 
                 case 7:
@@ -98,6 +109,9 @@ public class Main {
                     situacao();
                     break;
 
+                case 11:
+                    lancarNotas();
+                    break;
                 case 0:
                     return;
                 default:
@@ -124,9 +138,7 @@ public class Main {
         System.out.println("Carga Horaria : ");
         String cargaHoraria = input.nextLine();
         //Imprimdo lista de cursos disponiveis para a cadastrar a Diciplina
-        for(Curso cursoTemp : cursos){
-            System.out.println(cursoTemp.getId()+". "+cursoTemp.getNomeCurso());
-        }
+        listarCursos();
         System.out.println("Insira o id co curso ");
         int aux = (input.nextInt());
         //Mudando o id da diciplina
@@ -148,9 +160,7 @@ public class Main {
         System.out.println("Data de Nascimento : ");
         String data = input.nextLine();
         //Imprimindo Cursos disponiveis para se matricular
-        for(Curso cursoTemp : cursos){
-            System.out.println(cursoTemp.getId() + " - " + cursoTemp.getNomeCurso());
-        }
+        listarCursos();
         System.out.println("Digite o id do Curso para a matricula : ");
         int aux = input.nextInt();
         //mudando id do aluno
@@ -174,16 +184,14 @@ public class Main {
         int idTemp = professores.size(); //mundado o id co professor
         professores.add(new Professor(idTemp,nome, cpf, celular, cracha, salario, formacao) );
     }
-
+    //Lançamento de notas
     public static void lancarNotas(){
         //instacando a class avaliacao
         Avaliacao avaliacao = new Avaliacao();
-        Double media = 0.0;
+        Double media=0.0, nota = 0.0;
 
         //imprimindo alunos cadastrados e selecionando
-        for(Aluno alunoTemp : alunos){
-            System.out.println(alunoTemp.getId() + ". "+ alunoTemp.getNome());
-        }
+        listarAlunos();
         System.out.println("Digite o codigo do aluno ");
         int idAluno = input.nextInt();
         //adicionando aluno a classe Avaliação
@@ -196,6 +204,7 @@ public class Main {
         avaliacao.setDiciplina(alunos.get(idAluno).getDiciplina().get(idDiciplina));
 
         //pegando a data
+        input.nextLine();
         System.out.println("data da diciplina ");
         String data = input.nextLine();
         avaliacao.setData(data);
@@ -203,9 +212,9 @@ public class Main {
         //lançando notas
         for(int i=0; i<3; i++){
             System.out.println("Digite a nota " + (i+1) + " :");
-            Double nota = input.nextDouble();
+            nota = input.nextDouble();
             avaliacao.setNotas(nota);
-             media+=nota;
+            media+=nota;
         } 
 
         //fazendo media
@@ -217,9 +226,7 @@ public class Main {
     //matricular aluno em uma disciplina
     public static void matricular(){
         //imprimindo lista de alunos
-        for(Aluno alunoTemp : alunos){
-            System.out.println(alunoTemp.getId() + ". " + alunoTemp.getNome());
-        }
+        listarAlunos();
         System.out.println("Digite o id do aluno : ");
         int idAluno = input.nextInt();
         //imprimindo disciplinas disponiveis
@@ -228,7 +235,7 @@ public class Main {
                             +diciplinaTemp.getNomeDiciplina() + " - " 
                             + diciplinaTemp.getCurso().getNomeCurso());
         }   
-        System.out.println("Digite o id do Diciplina : ");
+        System.out.println("Digite o id da Diciplina : ");
         int idDisciplina = input.nextInt();
         //cadastrando a disciplina escolhida na classe aluno
         alunos.get(idAluno).setDiciplina(diciplinas.get(idDisciplina));
@@ -246,4 +253,17 @@ public class Main {
         alunos.get(idAluno).imprimirSituacao();
 
     }
+    //Listar todos alunos
+    public static void listarAlunos(){
+        for(Aluno alunoTemp : alunos){
+            System.out.println(alunoTemp.getId() + ". "+ alunoTemp.getNome());
+        }
+    }
+    //Listar todos os cursos
+    public static void listarCursos(){
+        for(Curso cursoTemp : cursos){
+            System.out.println(cursoTemp.getId()+". "+cursoTemp.getNomeCurso());
+        }
+    }
+
 }

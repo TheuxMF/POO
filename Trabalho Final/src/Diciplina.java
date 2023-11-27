@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Diciplina {
-    private int id=15;
+    private int id;
     private String nomeDiciplina;
     private String cargaHoraria;
     private Curso curso;

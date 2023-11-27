@@ -75,9 +75,17 @@ public class Aluno extends Pessoa {
     public void imprimirSituacao(){
         for(Avaliacao avaliacao : avaliacaos){
             System.out.println("---------------------------------------------------------/n");
-            System.out.println("nome : "+ avaliacao.getAluno());
-            System.out.println("nome : "+ avaliacao.getData());
-            System.out.println("nome : "+ avaliacao.getMedia());  
+            System.out.println("nome : "+ avaliacao.getAluno().getNome());
+            System.out.println("data : "+ avaliacao.getData());
+            System.out.println("nota 1 : "+ avaliacao.getNotas().get(0));
+            System.out.println("nota 2 : "+ avaliacao.getNotas().get(1));
+            System.out.println("nota 3 : "+ avaliacao.getNotas().get(2));
+            System.out.println("Media : "+ avaliacao.getMedia());
+            if (avaliacao.getMedia()>=7) {
+                System.out.println("Aprovado");
+            }else{
+                System.out.println("Reprovado"); 
+            }
             System.out.println("---------------------------------------------------------/n");    
         }
     }
